@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Contact Page</title>
+    
+    <style>
+        /* Base Reset and Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb; /* bg-gray-50 */
+            min-height: 100vh;
+        }
+
+        /* --- Colors and Utility Classes --- */
+        :root {
+            --primary-red: #e53935;
+            --primary-red-hover: #c62828;
+            --dark-bg: #212121; /* bg-gray-800 equivalent */
+            --light-text: #e5e7eb; /* text-gray-300 */
+            --faded-text: #9ca3af; /* text-gray-400 */
+        }
+
+        .primary-red-btn {
+            background-color: var(--primary-red);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            margin-left: 100px;
+        }
+        
+        .primary-red-btn:hover {
+            background-color: var(--primary-red-hover);
+            transform: scale(1.05);
+        }
+
+        /* --- Navigation Bar --- */
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: white;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-content {
+            max-width: 80rem; /* max-w-7xl */
+            margin-left: auto;
+            margin-right: auto;
+            padding: 0 1rem; /* px-4 */
+            height: 4rem; /* h-16 */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        .logo-icon {
+            background-color: #dc2626; /* bg-red-600 */
+            height: 1.5rem;
+            width: 1.5rem;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .nav-links-container {
+            display: none; /* hidden on mobile by default */
+        }
+        
+        .nav-links-container a {
+            color: #4b5563; /* text-gray-600 */
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: color 0.15s ease;
+        }
+        
+        .nav-links-container a:hover {
+            color: #dc2626; /* hover:text-red-600 */
+        }
+        
+        @media (min-width: 768px) { /* md: breakpoint */
+            .nav-links-container {
+                display: flex;
+                gap: 2rem; /* space-x-8 */
+            }
+        }
+        
+        /* --- Main Contact Layout --- */
+        .main-content {
+            padding: 3rem 1rem; /* py-12 px-4 */
+        }
+
+        .contact-box {
+            max-width: 72rem; /* max-w-6xl */
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* shadow-2xl */
+            border-radius: 0.75rem; /* rounded-xl */
+            overflow: hidden;
+            border: 1px solid #f3f4f6; /* border-gray-100 */
+            display: grid;
+            grid-template-columns: 1fr; /* Default to single column */
+        }
+
+        @media (min-width: 1024px) { /* lg: breakpoint */
+            .contact-box {
+                grid-template-columns: 2fr 3fr; /* lg:grid-cols-5 (2/5 and 3/5) */
+            }
+        }
+
+        /* --- Left Column (Contact Info) --- */
+        .col-left {
+            background-color: var(--dark-bg);
+            color: white;
+            padding: 2.5rem; /* p-10 */
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem; /* space-y-10 */
+        }
+        
+        .col-left h2 {
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 600;
+            letter-spacing: -0.025em; /* tracking-tight */
+            margin-bottom: 0.75rem;
+        }
+        
+        .col-left p {
+            font-size: 0.875rem;
+        }
+        
+        .contact-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem; /* space-y-3 */
+        }
+
+        .contact-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* space-x-3 */
+            color: #f87171; /* text-red-400 */
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-header svg {
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .contact-details {
+            font-size: 0.875rem;
+            color: var(--light-text);
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .contact-details.address {
+            line-height: 1.6;
+        }
+
+        /* --- Right Column (Contact Form) --- */
+        .col-right {
+            background-color: white;
+            padding: 2.5rem; /* p-10 */
+        }
+        
+        .col-right h2 {
+            font-size: 1.875rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+            color: #1f2937;
+            margin-bottom: 2rem;
+        }
+        
+        .form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* space-y-6 */
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr; /* Default to single column */
+            gap: 1.5rem; /* gap-6 */
+        }
+
+        @media (min-width: 768px) { /* md: breakpoint */
+            .form-row {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* space-y-2 */
+        }
+
+        .form-group label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151; /* text-gray-700 */
+        }
+
+        /* Form Inputs (Text, Email, Select, Textarea) */
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 0.75rem; /* p-3 */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            border-radius: 0.5rem;
+            transition: all 0.15s ease;
+            font-size: 1rem;
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: var(--primary-red);
+            outline: 2px solid var(--primary-red);
+            outline-offset: 1px;
+        }
+        
+        .form-textarea {
+            resize: vertical; /* resize-none, but vertical is usually better */
+        }
+        
+        /* Specific Phone Input Styling */
+        .phone-group {
+            display: flex;
+        }
+        
+        .phone-prefix {
+            display: inline-flex;
+            align-items: center;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            font-size: 0.875rem;
+            color: #1f2937;
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-right: 0;
+            border-top-left-radius: 0.5rem;
+            border-bottom-left-radius: 0.5rem;
+        }
+        
+        .phone-input {
+            flex-grow: 1;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        /* Custom Select Arrow (CSS-only replacement for Tailwind's utility) */
+        .form-select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%236b7280'%3e%3cpath d='M6 8l4 4 4-4' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 0.75rem center;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+            background-color: white;
+        }
+        
+        /* Submit Button Styling */
+        .submit-btn {
+            padding: 0.75rem 1.5rem; /* px-6 py-3 */
+            font-size: 1rem; /* text-base */
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: scale(1.02);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <!-- Logo -->
+           <div class="logo">
+             <img src="image/logo.png.png" alt="logo" height="30">
+        
+                    </div>
+
+            <!-- Nav Links -->
+            <div class="nav-links-container">
+                <a href="#">Home</a>
+                <a href="#">About</a>
+                <a href="#">Team</a>
+                <a href="#">Tech Partner</a>
+                <a href="#">Our Projects</a>
+                <a href="#">Our Services</a>
+                <a href="#">Career</a>
+                <a href="#">Blog</a>
+            </div>
+
+            <!-- Contact Button -->
+            <button class="primary-red-btn">
+                Contact Us
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Contact Section -->
+    <main class="main-content">
+        <div class="contact-box">
+
+            <!-- Left Column: Contact Details (Dark Background) -->
+            <div class="col-left">
+                
+                <div>
+                    <h2>Other ways to connect</h2>
+                    <p style="color: var(--faded-text);">We' love to hear from you. Our friendly team is always here to chat.</p>
+                </div>
+
+                <!-- Email Section -->
+                <div class="contact-group">
+                    <div class="contact-header">
+                        <!-- Email Icon -->
+                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path></svg>
+                        <h3>Reach us on email</h3>
+                    </div>
+                    <p style="color: var(--faded-text);">Our friendly team is here to help.</p>
+                    <div class="contact-details">
+                        <p>raghav@randomitsolutions.com</p>
+                        <p>suman.kumar@randomitsolutions.com</p>
+                        <p>marketing@randomitsolutions.com</p>
+                        <p>rk@randomitsolutions.com</p>
+                    </div>
+                </div>
+
+                <!-- Phone Section -->
+                <div class="contact-group">
+                    <div class="contact-header">
+                        <!-- Phone Icon -->
+                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l1.35 6.831a1 1 0 01-.84 1.144L6 14a1 1 0 00-1 1v2a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 00-1-1h-.086a1 1 0 01-.138-.035l-1.35-6.831a.01.01 0 00-.01-.002zM16.847 2a1 1 0 00-.986.836l-1.35 6.831a1 1 0 00.84 1.144L14 14a1 1 0 011 1v2a1 1 0 01-1 1h-2a1 1 0 01-1-1v-2a1 1 0 011-1h.086a1 1 0 00.138-.035l1.35-6.831a.01.01 0 00.01-.002z"></path></svg>
+                        <h3>Phone</h3>
+                    </div>
+                    <p style="color: var(--faded-text);">Mon-Fri from 8am to 5pm.</p>
+                    <div class="contact-details">
+                        <p>MR. RAGHAV - 8448870418</p>
+                        <p>MR. SUMAN KUMAR JHA - 8507541015</p>
+                        <p>MR. RITIK - 9319231117</p>
+                        <p>MR. R KUMAR - 9717157829</p>
+                    </div>
+                </div>
+
+                <!-- Office Section -->
+                <div class="contact-group">
+                    <div class="contact-header">
+                        <!-- Location Icon -->
+                        <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path></svg>
+                        <h3>Office</h3>
+                    </div>
+                    <p style="color: var(--faded-text);">Come say hello at our office HQ.</p>
+                    <p class="contact-details address">
+                        2315/23D, 2nd floor, Near Atul Kataria Chowk, behind Karim's Hotel, Near Sec-14 Gurugram, Haryana 122001
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- Right Column: Contact Form (Light Background) -->
+            <div class="col-right">
+                
+                <h2>
+                    Love to hear from you, Get in touch 👋
+                </h2>
+
+                <form class="form">
+                    <!-- Name and Email Row -->
+                    <div class="form-row">
+                        <!-- Name Input -->
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" name="name" placeholder="Edward Snowden"
+                                class="form-input">
+                        </div>
+
+                        <!-- Email Input -->
+                        <div class="form-group">
+                            <label for="email">Your Email</label>
+                            <input type="email" id="email" name="email" placeholder="itonexample@gmail.com"
+                                class="form-input">
+                        </div>
+                    </div>
+
+                    <!-- Phone and Service Row -->
+                    <div class="form-row">
+                        <!-- Phone Input -->
+                        <div class="form-group">
+                            <label for="phone">Phone No.</label>
+                            <div class="phone-group">
+                                <span class="phone-prefix">
+                                    +91
+                                </span>
+                                <input type="tel" id="phone" name="phone" placeholder="Enter your phone no."
+                                    class="form-input phone-input">
+                            </div>
+                        </div>
+
+                        <!-- Service Select -->
+                        <div class="form-group">
+                            <label for="service">What Kind of Service You Looking for?</label>
+                            <select id="service" name="service" class="form-select">
+                                <option value="" disabled selected>New Computer Setup</option>
+                                <option value="web">Web Development</option>
+                                <option value="app">Mobile App Development</option>
+                                <option value="consult">IT Consulting</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Message Textarea -->
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" placeholder="Let tell us know your project about"
+                            class="form-textarea"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div>
+                        <button type="submit" class="primary-red-btn submit-btn">
+                            <span>Send message</span>
+                            <!-- Right Arrow Icon -->
+                            <svg style="width: 1rem; height: 1rem; margin-left: 0.25rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+    </main>
+    
+</body>
+</html>
