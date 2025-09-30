@@ -31,7 +31,7 @@ The project showcases the services and information about RIS in a clean and resp
 ![Homepage Screenshot](images/homepage.png)
 
 ### Contact Page
-![Contactpage Screenshot](imagess/contactpage.png)
+![Contactpage Screenshot](images/contactpage.png)
 
 ---
 👩‍💻 Developed as part of a frontend project for **RIS Services**.
