@@ -26,5 +26,12 @@ The project showcases the services and information about RIS in a clean and resp
 - Create multiple pages for services, contact, and about.
 - Enhance responsiveness with advanced CSS or frameworks.
 
+# Live Demo
+### Homepage
+![Homepage Screenshot](images/homepage.png)
+
+### Contact Page
+![Contactpage Screenshot](imagess/contactpage.png)
+
 ---
 👩‍💻 Developed as part of a frontend project for **RIS Services**.
