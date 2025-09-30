@@ -13,7 +13,7 @@ The project showcases the services and information about RIS in a clean and resp
 .
 ├── index.html # Main webpage
 ├── style.css # Stylesheet
-└── assets/ # (Optional) Images or icons used
+└── images/ #  Images or icons used
 
 
 # How to Use
